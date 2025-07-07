@@ -42,6 +42,37 @@ namespace application.DAL.RAW.Repository
             };
         }
 
+        public override IEnumerable<Cp> GetByName(string name)
+        {
+            List<Cp> entities = new List<Cp>();
+            string query = GetQuery();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query += " WHERE CP.id LIKE @name";
+                query += " OR E.firstName LIKE @name";
+                query += " OR C1.cityName LIKE @name";
+                query += " OR C2.cityName LIKE @name";
+                query += " OR CP.cpState LIKE @name";
+            }
+
+            using (SqlCommand command = new SqlCommand(query, _connection))
+            {
+                if (!string.IsNullOrEmpty(name))
+                {
+                    command.Parameters.AddWithValue("@name", "%" + name + "%");
+                }
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        entities.Add(MapFromReader(reader));
+                    }
+                }
+            }
+            return entities;
+        }
         protected override void AddParameters(SqlCommand command, Cp Cp)
         {
             command.Parameters.AddWithValue("@id", Cp.Id); // For update/delete

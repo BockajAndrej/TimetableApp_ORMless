@@ -134,8 +134,16 @@ namespace application.App.Pages.ViewModel
         private async Task LoadDataCpQuery()
         {
             Cps.Clear();
-            var result = await _cpFacade.GetByFilterAsync(SelectedEmployees, SelectedCities, SelectedVehicles);
-            Cps = new ObservableCollection<Cp>(result);
+            if (SearchbarCp == string.Empty)
+            {
+                var result = await _cpFacade.GetByFilterAsync(SelectedEmployees, SelectedCities, SelectedVehicles);
+                Cps = new ObservableCollection<Cp>(result);
+            }
+            else
+            {
+                var result = await _cpFacade.GetByNameAsync(SearchbarCp);
+                Cps = new ObservableCollection<Cp>(result);
+            }
         }
 
 
