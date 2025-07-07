@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup x:TypeArguments="system:Int32" 
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:system="clr-namespace:System;assembly=System.Runtime"
+               xmlns:details="clr-namespace:application.DAL.RAW.Entities;assembly=application.DAL.RAW"
+               x:Class="application.App.Pages.View.Popups.CityEditPopup"
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Padding="-10"
+               BackgroundColor="{StaticResource Gray900}"
+               >
+
+    <toolkit:Popup.Content>
+        <Grid RowDefinitions="Auto, *, Auto"
+          BackgroundColor="{StaticResource Gray900}"
+        WidthRequest="350"
+        HeightRequest="450">
+
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+                <Image Grid.Column="0"
+                   Source="city_ilustration.jpg"
+                   Aspect="AspectFit"
+                   WidthRequest="70"
+                   HeightRequest="70"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Start" />
+
+                <Button Grid.Column="2" Text="✕" FontSize="Large" TextColor="Gray"
+                    BackgroundColor="Transparent" BorderWidth="0"
+                    HorizontalOptions="End" VerticalOptions="Start" Clicked="OnCloseTapped"/>
+            </Grid>
+
+            <VerticalStackLayout Grid.Row="1" Spacing="10" x:DataType="details:City">
+                <Label Text="ID (max 10): " FontAttributes="Bold" />
+                <Entry IsEnabled="{Binding IdIsUsed}" Placeholder="Zadajte ID" Text="{Binding Id, Mode=TwoWay}"/>
+
+                <Label Text="Meno:" FontAttributes="Bold" />
+                <Entry Placeholder="Zadajte meno" Text="{Binding CityName, Mode=TwoWay}"/>
+
+                <Label Text="Štát:" FontAttributes="Bold" />
+                <Entry Placeholder="Zadajte priezvisko" Text="{Binding StateName, Mode=TwoWay}"/>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="20" >
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                        <Label Text="Sirka:" FontAttributes="Bold" />
+                        <Entry Placeholder="Zadajte sirku" Keyboard="Default" Text="{Binding Longitude, Mode=TwoWay}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                        <Label Text="Vyska:" FontAttributes="Bold" />
+                        <Entry Placeholder="Zadajte vysku" Keyboard="Default" Text="{Binding Latitude, Mode=TwoWay}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*, auto, Auto" Margin="0,10,0,0" ColumnSpacing="20">
+                <Button Grid.Column="1"
+                    Text="Odstranit"
+                    HorizontalOptions="Center"
+                    IsEnabled="{Binding IdIsUsedInverseValue}" 
+                    x:DataType="details:City" 
+                    Clicked="OnDeleteTapped"/>
+
+                <Button Grid.Column="2"
+                    Text="Uložiť"
+                    HorizontalOptions="End"
+                    Clicked="OnSaveClicked"
+                     />
+            </Grid>
+        </Grid>
+    </toolkit:Popup.Content>
+</toolkit:Popup>

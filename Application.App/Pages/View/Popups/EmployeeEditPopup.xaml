@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup x:TypeArguments="system:Int32" 
+               xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:system="clr-namespace:System;assembly=mscorlib"
+               xmlns:details="clr-namespace:application.DAL.RAW.Entities;assembly=application.DAL.RAW"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="application.App.Pages.View.Popups.EmployeeEditPopup"
+               Padding="-10"
+               BackgroundColor="{StaticResource Gray900}"
+>
+
+    <toolkit:Popup.Content>
+        <Grid RowDefinitions="Auto, *, Auto"
+              BackgroundColor="{StaticResource Gray900}"
+            WidthRequest="400"
+            HeightRequest="450">
+
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,10">
+                <Image Grid.Column="0"
+                       Source="anonymous_user.jpg"
+                       Aspect="AspectFit"
+                       WidthRequest="60"
+                       HeightRequest="60"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start" />
+
+                <Button Grid.Column="2" Text="✕" FontSize="Large" TextColor="Gray"
+                        BackgroundColor="Transparent" BorderWidth="0"
+                        HorizontalOptions="End" VerticalOptions="Start" Clicked="OnCloseTapped"/>
+            </Grid>
+
+            <VerticalStackLayout Grid.Row="1" Spacing="10">
+                <Label Text="ID (max 10): " FontAttributes="Bold" />
+                <Entry IsEnabled="{Binding IdIsUsed}" Placeholder="Zadajte ID" x:DataType="details:Employee" Text="{Binding Id, Mode=TwoWay}"/>
+
+                <Label Text="Meno:" FontAttributes="Bold" />
+                <Entry Placeholder="Zadajte meno" Text="{Binding FirstName, Mode=TwoWay}"/>
+
+                <Label Text="Priezvisko:" FontAttributes="Bold" />
+                <Entry Placeholder="Zadajte priezvisko" Text="{Binding LastName, Mode=TwoWay}"/>
+
+                <Grid ColumnDefinitions="auto, *" ColumnSpacing="20" >
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="0">
+                        <Label Text="Dátum narodenia:" FontAttributes="Bold" />
+                        <DatePicker Format="d.M.yyyy" Date="{Binding BirthDayDateTime, Mode=TwoWay}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                        <Label Text="Rodné číslo:" FontAttributes="Bold" />
+                        <Entry Placeholder="Zadajte rodné číslo" Keyboard="Default" Text="{Binding BirthNumber, Mode=TwoWay}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </VerticalStackLayout>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*, auto, Auto" Margin="0,10,0,0" ColumnSpacing="20">
+                <Button Grid.Column="1"
+                        Text="Odstranit"
+                        HorizontalOptions="Center"
+                        IsEnabled="{Binding IdIsUsedInverseValue}" 
+                        x:DataType="details:Employee" 
+                        Clicked="OnDeleteTapped"/>
+
+                <Button Grid.Column="2"
+                        Text="Uložiť"
+                        HorizontalOptions="End"
+                        Clicked="OnSaveClicked"
+                         />
+            </Grid>
+        </Grid>
+    </toolkit:Popup.Content>
+
+
+</toolkit:Popup>

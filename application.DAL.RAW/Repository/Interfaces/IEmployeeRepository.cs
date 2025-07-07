@@ -1,0 +1,13 @@
+﻿using application.DAL.RAW.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace application.DAL.RAW.Repository.Interfaces
+{
+    public interface IEmployeeRepository : IRepository<Entities.Employee>
+    {
+    }
+}

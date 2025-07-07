@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/.idea/.idea.Application.App/.idea
+/Application.App.sln.DotSettings.user
+/application.DAL.RAW/bin/Debug/net9.0
+/application.DAL.RAW/obj
+/Application.BL.Tests/bin/Debug/net9.0
+/Application.BL.Tests/obj
+/application.BL.RAW/bin/Debug/net9.0
+/application.BL.RAW/obj
+/Application.App/bin/Debug/net9.0-windows10.0.19041.0/win10-x64
+/Application.App/obj
+/Application.App/Application.App.csproj.user
