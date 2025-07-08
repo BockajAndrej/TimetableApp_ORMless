@@ -14,6 +14,7 @@ namespace application.DAL.RAW.Repository
         public TransportRepository(SqlConnection connection) : base(connection) { }
 
         protected override string GetTableName() => "Transport";
+        protected override string GetAssignTable() => "";
         protected override string GetQuery() => $"SELECT * FROM dbo.{GetTableName()}";
         protected override string GetIdColumnName() => "id"; // Assumed identity
 

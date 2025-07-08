@@ -15,6 +15,7 @@ namespace application.DAL.RAW.Repository
         public EmployeeRepository(SqlConnection connection) : base(connection) { }
 
         protected override string GetTableName() => "Employee";
+        protected override string GetAssignTable() => "";
         protected override string GetQuery() => $"SELECT * FROM dbo.{GetTableName()}";
         protected override string GetIdColumnName() => "id";
 

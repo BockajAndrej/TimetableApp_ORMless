@@ -164,7 +164,6 @@
                                             <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
                                             <Label Text="{Binding CpState}" FontAttributes="Bold" Padding="5"/>
                                         </StackLayout>
-
                                     </Border>
                                 </toolkit:Expander.Header>
 

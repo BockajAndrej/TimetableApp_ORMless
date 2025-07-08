@@ -24,11 +24,12 @@ namespace application.DAL.RAW.Repository
         protected abstract string GetQuery();
         protected abstract string GetTableName();
         protected abstract string GetIdColumnName();
+        protected abstract string GetAssignTable();
 
         public virtual TEntity GetById(object id)
         {
             TEntity entity = null;
-            string query = $"{GetQuery()} WHERE {GetIdColumnName()} = @id";
+            string query = $"{GetQuery()} WHERE {GetAssignTable()}.{GetIdColumnName()} = @id";
             using (SqlCommand command = new SqlCommand(query, _connection))
             {
                 command.Parameters.AddWithValue("@id", id);

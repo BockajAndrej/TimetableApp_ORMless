@@ -17,6 +17,7 @@ namespace application.DAL.RAW.Repository
 
         protected override string GetTableName() => "Vehicle";
         protected override string GetIdColumnName() => "id";
+        protected override string GetAssignTable() => "V";
         protected override string GetQuery() => $"SELECT DISTINCT V.* FROM dbo.{GetTableName()} AS V LEFT JOIN dbo.Transport AS T ON T.id_vehicle = V.id ";
 
         protected override Vehicle MapFromReader(SqlDataReader reader)

@@ -21,8 +21,8 @@ namespace application.DAL.RAW.Repository
             "LEFT JOIN dbo.City AS C2 ON C2.id = CP.id_endCity ";
 
         protected override string GetTableName() => "Cp";
-
-        protected override string GetIdColumnName() => "id"; // Assumed identity
+        protected override string GetIdColumnName() => "id";
+        protected override string GetAssignTable() => "CP";
 
         protected override Cp MapFromReader(SqlDataReader reader)
         {

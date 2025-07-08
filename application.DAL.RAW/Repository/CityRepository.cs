@@ -16,6 +16,7 @@ namespace application.DAL.RAW.Repository
         protected override string GetTableName() => "City";
 
         protected override string GetIdColumnName() => "id";
+        protected override string GetAssignTable() => "";
         protected override string GetQuery() => $"SELECT * FROM dbo.{GetTableName()}";
 
         protected override City MapFromReader(SqlDataReader reader)
