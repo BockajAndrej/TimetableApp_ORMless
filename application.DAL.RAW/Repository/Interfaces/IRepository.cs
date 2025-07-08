@@ -13,6 +13,6 @@ namespace application.DAL.RAW.Repository.Interfaces
 
         //Specific
         public IEnumerable<TEntity> GetByName(string name);
-        public IEnumerable<TEntity> GetByFilters(List<Employee> EmployeeId, List<City> CityId, List<Vehicle> Vehicles);
+        public IEnumerable<TEntity> GetByFilters(List<Employee> EmployeeId, List<City> CityId, List<Vehicle> Vehicles, List<Cp> Cps);
     }
 }

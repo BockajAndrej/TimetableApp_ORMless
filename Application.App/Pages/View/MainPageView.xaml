@@ -147,27 +147,39 @@
             <Border Grid.Row="1"
                     StrokeShape="RoundRectangle 5"
                     Padding="5">
-
-                <CollectionView ItemsSource="{Binding Cps}">
+                <CollectionView ItemsSource="{Binding Cps}" x:Name="CpCollectionView">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="details:Cp">
-                            <Border StrokeShape="RoundRectangle 5"
-                                    Padding="5"
-                                    Margin="0,5">
-                                <Grid ColumnDefinitions="*, auto">
-                                    <StackLayout Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center">
-                                        <Label Text="{Binding Id}" FontAttributes="Bold" Padding="5"/>
-                                        <Label Text="{Binding EmployeeName}" FontAttributes="Bold" Padding="5"/>
-                                        <Label Text="{Binding StartCityName}" FontAttributes="Bold" Padding="5"/>
-                                        <Label Text="{Binding EndCityName}" FontAttributes="Bold" Padding="5"/>
-                                        <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
-                                        <Label Text="{Binding CreationDate}" FontAttributes="Bold" Padding="5"/>
-                                        <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
-                                        <Label Text="{Binding CpState}" FontAttributes="Bold" Padding="5"/>
-                                    </StackLayout>
-                                    <Button Grid.Column="1" Text=". . ."  FontSize="10" FontAttributes="Bold"></Button>
-                                </Grid>
-                            </Border>
+                            <toolkit:Expander IsExpanded="False" ExpandedChanged="OnExpanderIsExpandedChanged" Command="{Binding Source={x:Reference CpCollectionView}, Path=BindingContext.BtnClickedCpFromExpanderCommand}" 
+                                              CommandParameter="{Binding .}" >
+                                <toolkit:Expander.Header>
+                                    <Border StrokeShape="RoundRectangle 5" Padding="5" Margin="0,5">
+                                        <StackLayout Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center">
+                                            <Label Text="{Binding Id}" FontAttributes="Bold" Padding="5"/>
+                                            <Label Text="{Binding EmployeeName}" FontAttributes="Bold" Padding="5"/>
+                                            <Label Text="{Binding StartCityName}" FontAttributes="Bold" Padding="5"/>
+                                            <Label Text="{Binding EndCityName}" FontAttributes="Bold" Padding="5"/>
+                                            <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
+                                            <Label Text="{Binding CreationDate}" FontAttributes="Bold" Padding="5"/>
+                                            <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
+                                            <Label Text="{Binding CpState}" FontAttributes="Bold" Padding="5"/>
+                                        </StackLayout>
+
+                                    </Border>
+                                </toolkit:Expander.Header>
+
+                                <Border StrokeShape="RoundRectangle 3" Padding="-5" Margin="50,-7, 0, 0">
+                                    <VerticalStackLayout Padding="15">
+                                        <CollectionView ItemsSource="{Binding Vehicles}" MaximumHeightRequest="200">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate x:DataType="details:Vehicle">
+                                                    <Label Padding="15, 0, 0, 0" Text="{Binding VehicleName}"></Label>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </toolkit:Expander>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

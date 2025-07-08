@@ -85,7 +85,7 @@ namespace application.DAL.RAW.Repository
             command.Parameters.AddWithValue("@CpState", Cp.CpState);
         }
 
-        public virtual IEnumerable<Cp> GetByFilters(List<Employee> employees, List<City> cities, List<Vehicle> Vehicles)
+        public virtual IEnumerable<Cp> GetByFilters(List<Employee> employees, List<City> cities, List<Vehicle> Vehicles, List<Cp> Cps)
         {
             List<Cp> travelOrders = new List<Cp>();
             bool inserterToQuery = false;

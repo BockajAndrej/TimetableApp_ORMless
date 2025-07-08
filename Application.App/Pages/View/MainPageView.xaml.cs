@@ -137,21 +137,19 @@ public partial class MainPageView : ContentPage
         _viewModel.IsClickedVehicle = null;
     }
 
-    //private async void EditCpButton_Clicked(object sender, EventArgs e)
-    //{
-    //    IPopupResult<int> popupResult = await this.ShowPopupAsync<int>(new CpEditPopup(), popupOptions);
-    //}
-    //// ExpandedChanged="OnExpanderIsExpandedChanged"
-    //private void OnExpanderIsExpandedChanged(object sender, CommunityToolkit.Maui.Core.ExpandedChangedEventArgs e)
-    //{
-    //    //Expanded
-    //    if (e.IsExpanded)
-    //    {
-    //    }
-    //    //Collapsed
-    //    else
-    //    {
-    //        //_viewModel.LoadDataCpQuery();
-    //    }
-    //}
+
+    // ExpandedChanged="OnExpanderIsExpandedChanged"
+    private void OnExpanderIsExpandedChanged(object sender, CommunityToolkit.Maui.Core.ExpandedChangedEventArgs e)
+    {
+        //Expanded
+        if (e.IsExpanded)
+        {
+            _viewModel.GetByFilterAsync();
+        }
+        //Collapsed
+        else
+        {
+            //_viewModel.LoadDataCpQuery();
+        }
+    }
 }

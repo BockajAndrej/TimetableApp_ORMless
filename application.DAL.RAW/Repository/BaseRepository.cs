@@ -85,7 +85,7 @@ namespace application.DAL.RAW.Repository
             throw new NotImplementedException();
         }
 
-        public IEnumerable<TEntity> GetByFilters(List<Employee> EmployeeId, List<City> CityId, List<Vehicle> Vehicles)
+        public IEnumerable<TEntity> GetByFilters(List<Employee> EmployeeId, List<City> CityId, List<Vehicle> Vehicles, List<Cp> Cps)
         {
             throw new NotImplementedException();
         }

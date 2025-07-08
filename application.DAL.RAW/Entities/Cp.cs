@@ -40,4 +40,5 @@ public partial class Cp : ObservableObject, IEntity<int>
     [ObservableProperty] private string _employeeName;
     [ObservableProperty] private string _startCityName;
     [ObservableProperty] private string _endCityName;
+    [ObservableProperty] private ObservableCollection<Vehicle> _vehicles = new();
 }

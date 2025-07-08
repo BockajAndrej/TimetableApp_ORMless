@@ -108,7 +108,10 @@ namespace application.App.Pages.ViewModel
         public Employee? IsClickedEmployee = null;
         public City? IsClickedCity = null;
         public Vehicle? IsClickedVehicle = null;
-        public Vehicle? IsClickedCp = null;
+        public Cp? IsClickedCp = null;
+
+        //To expand
+        public Cp? IsClickedCpToExpand = null;
 
         public MainPageViewModel(EmployeeFacade empfacade, CpFacade cpf, CityFacade cityf, VehicleFacade vehf)
         {
@@ -136,7 +139,7 @@ namespace application.App.Pages.ViewModel
             Cps.Clear();
             if (SearchbarCp == string.Empty)
             {
-                var result = await _cpFacade.GetByFilterAsync(SelectedEmployees, SelectedCities, SelectedVehicles);
+                var result = await _cpFacade.GetByFilterAsync(SelectedEmployees, SelectedCities, SelectedVehicles, new List<Cp>());
                 Cps = new ObservableCollection<Cp>(result);
             }
             else
@@ -145,7 +148,6 @@ namespace application.App.Pages.ViewModel
                 Cps = new ObservableCollection<Cp>(result);
             }
         }
-
 
         async partial void OnSearchbarEmployeeChanged(string? value)
         {
@@ -234,6 +236,24 @@ namespace application.App.Pages.ViewModel
         public async Task RoveVehicleAsync(Vehicle model)
         {
             await _vehicleFacade.DeleteAsync(model.Id);
+        }
+
+        public async Task GetByFilterAsync()
+        {
+            var selectedCp = new List<Cp>();
+            selectedCp.Add(IsClickedCpToExpand);
+            var result = await _vehicleFacade.GetByFilterAsync(new List<Employee>(), new List<City>(), new List<Vehicle>(), selectedCp);
+            foreach (var cp in Cps)
+            {
+                if (cp == IsClickedCpToExpand)
+                {
+                    cp.Vehicles.Clear();
+                    foreach (var vehicle in result)
+                    {
+                        cp.Vehicles.Add(vehicle);
+                    }
+                }
+            }
         }
 
         //Collection changed
@@ -341,19 +361,16 @@ namespace application.App.Pages.ViewModel
         {
             IsClickedVehicle = item;
         }
+
         [RelayCommand]
-        public void BtnClickedCpFromFilter(Vehicle item)
+        public void BtnClickedCpFromExpander(Cp item)
+        {
+            IsClickedCpToExpand = item;
+        }
+        [RelayCommand]
+        public void BtnClickedCpToShowDetail(Cp item)
         {
             IsClickedCp = item;
-        }
-
-
-        //Auxiliary Functions
-        private Expression<Func<T, bool>> Combine<T>(Expression<Func<T, bool>> predicate, Func<Expression, Expression, BinaryExpression> combination, Expression<Func<T, bool>> withPredicate)
-        {
-            var invocation = Expression.Invoke(withPredicate, predicate.Parameters);
-            var combined = combination(predicate.Body, invocation);
-            return Expression.Lambda<Func<T, bool>>(combined, predicate.Parameters);
         }
     }
 }
