@@ -213,14 +213,14 @@ namespace application.App.Pages.ViewModel
         public async Task<bool> SaveCityAsync(City model)
         {
             var result = await _cityFacade.SaveAsync(model);
-            if (result.Id <= 0)
+            if (result == null)
                 return false;
             return true;
         }
         public async Task<bool> SaveVehicleAsync(Vehicle model)
         {
             var result = await _vehicleFacade.SaveAsync(model);
-            if (result.Id <= 0)
+            if (result == null)
                 return false;
             return true;
         }

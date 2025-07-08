@@ -154,16 +154,19 @@
                                               CommandParameter="{Binding .}" >
                                 <toolkit:Expander.Header>
                                     <Border StrokeShape="RoundRectangle 5" Padding="5" Margin="0,5">
-                                        <StackLayout Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center">
-                                            <Label Text="{Binding Id}" FontAttributes="Bold" Padding="5"/>
-                                            <Label Text="{Binding EmployeeName}" FontAttributes="Bold" Padding="5"/>
-                                            <Label Text="{Binding StartCityName}" FontAttributes="Bold" Padding="5"/>
-                                            <Label Text="{Binding EndCityName}" FontAttributes="Bold" Padding="5"/>
-                                            <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
-                                            <Label Text="{Binding CreationDate}" FontAttributes="Bold" Padding="5"/>
-                                            <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
-                                            <Label Text="{Binding CpState}" FontAttributes="Bold" Padding="5"/>
-                                        </StackLayout>
+                                        <Grid ColumnDefinitions="*, auto">
+                                            <StackLayout Grid.Column="0" Orientation="Horizontal" VerticalOptions="Center">
+                                                <Label Text="{Binding Id}" FontAttributes="Bold" Padding="5"/>
+                                                <Label Text="{Binding EmployeeName}" FontAttributes="Bold" Padding="5"/>
+                                                <Label Text="{Binding StartCityName}" FontAttributes="Bold" Padding="5"/>
+                                                <Label Text="{Binding EndCityName}" FontAttributes="Bold" Padding="5"/>
+                                                <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
+                                                <Label Text="{Binding CreationDate}" FontAttributes="Bold" Padding="5"/>
+                                                <Label Text="-" FontAttributes="Bold" FontSize="15" Padding="5"/>
+                                                <Label Text="{Binding CpState}" FontAttributes="Bold" Padding="5"/>
+                                            </StackLayout>
+                                            <Button Grid.Column="1" Text="..."></Button>
+                                        </Grid>
                                     </Border>
                                 </toolkit:Expander.Header>
 
