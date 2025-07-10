@@ -178,7 +178,11 @@ namespace application.DAL.RAW.Repository
                 command.Parameters.AddWithValue("@endTime", Cp.EndTime);
                 command.Parameters.AddWithValue("@CpState", Cp.CpState);
 
-                command.ExecuteNonQuery();
+                object newId = command.ExecuteScalar();
+                if (newId != null && newId != DBNull.Value)
+                {
+                    Cp.Id = Convert.ToInt32(newId);
+                }
             }
         }
 

@@ -43,28 +43,28 @@
                     </Grid>
 
 
-                        <VerticalStackLayout Grid.Column="1" Padding="10">
-                            <Grid ColumnDefinitions="*, auto">
-                                <SearchBar Grid.Column="0" Placeholder="Search employees..." HorizontalTextAlignment="Start" Text="{Binding SearchbarEmployee, Mode=TwoWay}"/>
-                            </Grid>
+                    <VerticalStackLayout Grid.Column="1" Padding="10">
+                        <Grid ColumnDefinitions="*, auto">
+                            <SearchBar Grid.Column="0" Placeholder="Search employees..." HorizontalTextAlignment="Start"/>
+                        </Grid>
 
-                            <CollectionView ItemsSource="{Binding VehicleOptions}" 
+                        <CollectionView ItemsSource="{Binding VehicleOptions}" 
                                             MaximumHeightRequest="200" 
                                             SelectionMode="None"
                                             x:Name="VehiclePopupCollectionView">
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border StrokeShape="RoundRectangle 5" Padding="0" Margin="50, 0, 0,5">
-                                            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="auto, *, Auto" ColumnSpacing="10" Padding="5, 0, 5, 0">
-                                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding Id}" VerticalOptions="Center"/>
-                                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding VehicleName}" VerticalOptions="Center" HorizontalOptions="Center" />
-                                                <CheckBox IsChecked="{Binding ISelectedFromFilter}" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </VerticalStackLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border StrokeShape="RoundRectangle 5" Padding="0" Margin="50, 0, 0,5">
+                                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="auto, *, Auto" ColumnSpacing="10" Padding="5, 0, 5, 0">
+                                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Id}" VerticalOptions="Center"/>
+                                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding VehicleName}" VerticalOptions="Center" HorizontalOptions="Center" />
+                                            <CheckBox IsChecked="{Binding ISelectedFromFilter}" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
                 </Grid>
             </Grid>
 
@@ -73,7 +73,7 @@
                 <Button Grid.Column="1"
                         Text="Odstranit"
                         HorizontalOptions="Center"
-                        IsEnabled="{Binding IdIsUsedInverseValue}" 
+                        IsEnabled="{Binding IsDeteEnabled}" 
                         Clicked="OnDeleteTapped"/>
 
                 <Button Grid.Column="2"

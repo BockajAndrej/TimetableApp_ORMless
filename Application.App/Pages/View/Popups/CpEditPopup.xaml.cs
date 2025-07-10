@@ -166,8 +166,8 @@ public partial class CpEditPopup
             }
         }
     }
-    private TimeSpan _endTime = DateTime.Now.TimeOfDay;
 
+    private TimeSpan _endTime = DateTime.Now.TimeOfDay;
     public TimeSpan EndTime
     {
         get => _endTime;
@@ -181,6 +181,20 @@ public partial class CpEditPopup
         }
     }
 
+
+    private bool _isDeteEnabled = false;
+    public bool IsDeteEnabled
+    {
+        get => _isDeteEnabled;
+        set
+        {
+            if (_isDeteEnabled != value)
+            {
+                _isDeteEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     public CpEditPopup(Cp cpMain, MainPageViewModel vm)
     {
@@ -235,6 +249,7 @@ public partial class CpEditPopup
             VehicleOptions[index]!.ISelectedFromFilter = true;
         }
 
+        IsDeteEnabled = CpMain.IdIsUsedInverseValue;
     }
 
     async void OnSaveClicked(object? sender, EventArgs e)

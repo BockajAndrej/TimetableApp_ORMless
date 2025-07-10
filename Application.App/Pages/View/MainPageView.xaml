@@ -105,7 +105,7 @@
                         <Border StrokeShape="RoundRectangle 5" Padding="-5" Margin="0,0">
                             <VerticalStackLayout Padding="10">
                                 <Grid ColumnDefinitions="*, auto">
-                                    <SearchBar Grid.Column="0" Placeholder="Search vehicles..." HorizontalTextAlignment="Start" Text="{Binding SearchbarCity, Mode=TwoWay}"/>
+                                    <SearchBar Grid.Column="0" Placeholder="Search vehicles..." HorizontalTextAlignment="Start" Text="{Binding SearchbarVehicle, Mode=TwoWay}"/>
                                     <Button Grid.Column="1" Text="+" Clicked="EditVehicleButton_Clicked"/>
                                 </Grid>
 

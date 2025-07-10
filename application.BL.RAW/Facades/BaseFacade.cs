@@ -29,7 +29,7 @@ namespace application.BL.RAW.Facades
 
             var repository = _unitOfWork.GetRepository<TEntity>();
 
-            var existingEntity = repository.GetById(entity.Id);
+            TEntity? existingEntity = repository.GetById(entity.Id);
 
             if (existingEntity == null)
                 repository.Add(entity);

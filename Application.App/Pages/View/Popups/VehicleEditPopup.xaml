@@ -33,7 +33,7 @@
 
             <VerticalStackLayout Grid.Row="1" Spacing="10">
                 <Label Text="ID: " FontAttributes="Bold" />
-                <Entry IsEnabled="{Binding IdIsUsed}" Placeholder="Zadajte ID" x:DataType="details:Vehicle" Text="{Binding Id, Mode=TwoWay}"/>
+                <Entry IsEnabled="False" Placeholder="Zadajte ID" x:DataType="details:Vehicle" Text="{Binding Id, Mode=TwoWay}"/>
 
                 <Label Text="Meno:" FontAttributes="Bold" />
                 <Entry Placeholder="Zadajte meno"  x:DataType="details:Vehicle" Text="{Binding VehicleName, Mode=TwoWay}"/>
