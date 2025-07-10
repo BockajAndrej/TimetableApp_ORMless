@@ -15,7 +15,7 @@ namespace application.DAL.RAW.Repository
 
         protected override string GetTableName() => "Transport";
         protected override string GetAssignTable() => "T";
-        protected override string GetQuery() => $"SELECT * FROM dbo.{GetTableName()} AS {GetAssignTable()}";
+        protected override string GetQuery() => $"SELECT DISTINCT {GetAssignTable()}.* FROM dbo.{GetTableName()} AS {GetAssignTable()} LEFT JOIN CP AS C ON C.id = T.id_cp ";
         protected override string GetIdColumnName() => "id"; // Assumed identity
 
         protected override Transport MapFromReader(SqlDataReader reader)
@@ -54,6 +54,44 @@ namespace application.DAL.RAW.Repository
                 AddParameters(command, transport); // Uses the base helper which includes @id
                 command.ExecuteNonQuery();
             }
+        }
+
+        public virtual IEnumerable<Transport> GetByFilters(List<Employee?> employees, List<City> cities, List<Vehicle> Vehicles,
+            List<Cp> Cps)
+        {
+            List<Transport> items = new List<Transport>();
+            string query = GetQuery();
+
+            if (Cps.Count > 0)
+                query += "WHERE ";
+
+            foreach (var cp in Cps)
+            {
+                if (cp.Id == Cps[0].Id)
+                    query += "( ";
+
+                query += $"C.id = @cp{cp.Id} ";
+
+                if (cp.Id == Cps[^1].Id)
+                    query += ") ";
+                else
+                    query += "OR ";
+            }
+
+            using (SqlCommand command = new SqlCommand(query, _connection))
+            {
+                foreach (var item in Cps)
+                    command.Parameters.AddWithValue($"@cp{item.Id}", item.Id);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        items.Add(MapFromReader(reader));
+                    }
+                }
+            }
+            return items;
         }
     }
 }

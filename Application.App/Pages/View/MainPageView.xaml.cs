@@ -163,7 +163,6 @@ public partial class MainPageView : ContentPage
         //Yes was clicked
         if (popupResult.Result == 1)
         {
-            await _viewModel.SaveCpAsync(_viewModel.IsClickedCp);
             await _viewModel.LoadData();
         }
         else if (popupResult.Result == 2)

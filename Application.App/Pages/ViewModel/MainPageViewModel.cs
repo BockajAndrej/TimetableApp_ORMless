@@ -16,6 +16,7 @@ namespace application.App.Pages.ViewModel
         public readonly CpFacade CpFacade;
         public readonly CityFacade CityFacade;
         public readonly VehicleFacade VehicleFacade;
+        public readonly TransportFacade TransportFacade;
 
         //Collections
         private ObservableCollection<Employee?> _Employees;
@@ -113,12 +114,13 @@ namespace application.App.Pages.ViewModel
         //To expand
         public Cp? IsClickedCpToExpand = null;
 
-        public MainPageViewModel(EmployeeFacade empfacade, CpFacade cpf, CityFacade cityf, VehicleFacade vehf)
+        public MainPageViewModel(EmployeeFacade empfacade, CpFacade cpf, CityFacade cityf, VehicleFacade vehf, TransportFacade transportFacade)
         {
             EmployeeFacade = empfacade;
             CityFacade = cityf;
             CpFacade = cpf;
             VehicleFacade = vehf;
+            TransportFacade = transportFacade;
 
             LoadData();
         }

@@ -247,6 +247,29 @@ public partial class CpEditPopup
         CpMain.EndTime = EndDate + EndTime;
         CpMain.CpState = CpStateSelected;
 
+        var savedCp = _vm.CpFacade.SaveAsync(CpMain);
+
+        var transportsToBeRemoved = _vm.TransportFacade.GetByFilterAsync(new List<Employee?>(), new List<City>(),
+            new List<Vehicle>(), new List<Cp> { CpMain });
+
+        foreach (var transport in transportsToBeRemoved.Result)
+        {
+            await _vm.TransportFacade.DeleteAsync(transport.Id);
+        }
+
+        foreach (var vehicle in VehicleOptions)
+        {
+            if (vehicle is { ISelectedFromFilter: true })
+            {
+                Transport t = new Transport
+                {
+                    IdCp = savedCp.Result.Id,
+                    IdVehicle = vehicle.Id
+                };
+                await _vm.TransportFacade.SaveAsync(t);
+            }
+        }
+
         await CloseAsync(1);
     }
 
