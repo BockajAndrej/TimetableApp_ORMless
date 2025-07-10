@@ -137,8 +137,45 @@ public partial class MainPageView : ContentPage
         _viewModel.IsClickedVehicle = null;
     }
 
+    private async void EditCpButton_Clicked(object sender, EventArgs e)
+    {
+        if (_viewModel.IsClickedCp == null)
+        {
+            _viewModel.IsClickedCp = new Cp
+            {
+                Id = 0,
+                IdEmployee = string.Empty,
+                IdStartCity = 0,
+                IdEndCity = 0,
+                CreationDate = default,
+                StartTime = default,
+                EndTime = default,
+                CpState = string.Empty
+            };
+        }
+        var popup = new CpEditPopup(_viewModel.IsClickedCp, _viewModel);
 
-    // ExpandedChanged="OnExpanderIsExpandedChanged"
+        IPopupResult<int> popupResult = await this.ShowPopupAsync<int>(popup, popupOptions);
+
+        if (popupResult.WasDismissedByTappingOutsideOfPopup)
+            return;
+
+        //Yes was clicked
+        if (popupResult.Result == 1)
+        {
+            await _viewModel.SaveCpAsync(_viewModel.IsClickedCp);
+            await _viewModel.LoadData();
+        }
+        else if (popupResult.Result == 2)
+        {
+            await _viewModel.RemoveCpAsync(_viewModel.IsClickedCp);
+            await _viewModel.LoadData();
+        }
+
+        _viewModel.IsClickedCp = null;
+    }
+
+
     private void OnExpanderIsExpandedChanged(object sender, CommunityToolkit.Maui.Core.ExpandedChangedEventArgs e)
     {
         //Expanded
@@ -149,7 +186,6 @@ public partial class MainPageView : ContentPage
         //Collapsed
         else
         {
-            //_viewModel.LoadDataCpQuery();
         }
     }
 }

@@ -55,7 +55,7 @@ namespace application.DAL.RAW.Repository
             }
         }
 
-        public virtual IEnumerable<Vehicle> GetByFilters(List<Employee> employees, List<City> cities, List<Vehicle> Vehicles,
+        public virtual IEnumerable<Vehicle> GetByFilters(List<Employee?> employees, List<City> cities, List<Vehicle> Vehicles,
             List<Cp> Cps)
         {
             List<Vehicle> items = new List<Vehicle>();

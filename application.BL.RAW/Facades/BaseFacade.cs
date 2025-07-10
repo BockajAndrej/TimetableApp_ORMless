@@ -80,7 +80,7 @@ namespace application.BL.RAW.Facades
             return await Task.FromResult(entity);
         }
 
-        public async Task<IEnumerable<TEntity>> GetByFilterAsync(List<Employee> emps, List<City> cities, List<Vehicle> vehicles, List<Cp> cps)
+        public async Task<IEnumerable<TEntity>> GetByFilterAsync(List<Employee?> emps, List<City> cities, List<Vehicle> vehicles, List<Cp> cps)
         {
             var repository = _unitOfWork.GetRepository<TEntity>();
             var entity = repository.GetByFilters(emps, cities, vehicles, cps);

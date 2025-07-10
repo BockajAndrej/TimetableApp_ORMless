@@ -12,14 +12,14 @@ namespace application.App.Pages.ViewModel
     public partial class MainPageViewModel : ObservableObject
     {
         //Facades
-        private readonly EmployeeFacade _employeeFacade;
-        private readonly CpFacade _cpFacade;
-        private readonly CityFacade _cityFacade;
-        private readonly VehicleFacade _vehicleFacade;
+        public readonly EmployeeFacade EmployeeFacade;
+        public readonly CpFacade CpFacade;
+        public readonly CityFacade CityFacade;
+        public readonly VehicleFacade VehicleFacade;
 
         //Collections
-        private ObservableCollection<Employee> _Employees;
-        public ObservableCollection<Employee> Employees
+        private ObservableCollection<Employee?> _Employees;
+        public ObservableCollection<Employee?> Employees
         {
             get => _Employees;
             set
@@ -100,7 +100,7 @@ namespace application.App.Pages.ViewModel
         private string _searchbarCity = string.Empty;
 
         //List of selected Items
-        public List<Employee> SelectedEmployees = new List<Employee>();
+        public List<Employee?> SelectedEmployees = new List<Employee?>();
         public List<City> SelectedCities = new List<City>();
         public List<Vehicle> SelectedVehicles = new List<Vehicle>();
 
@@ -115,23 +115,23 @@ namespace application.App.Pages.ViewModel
 
         public MainPageViewModel(EmployeeFacade empfacade, CpFacade cpf, CityFacade cityf, VehicleFacade vehf)
         {
-            _employeeFacade = empfacade;
-            _cityFacade = cityf;
-            _cpFacade = cpf;
-            _vehicleFacade = vehf;
+            EmployeeFacade = empfacade;
+            CityFacade = cityf;
+            CpFacade = cpf;
+            VehicleFacade = vehf;
 
             LoadData();
         }
 
         public async Task LoadData()
         {
-            var emps = await _employeeFacade.GetAllAsync();
-            Employees = new ObservableCollection<Employee>(emps);
-            var cps = await _cpFacade.GetAllAsync();
+            var emps = await EmployeeFacade.GetAllAsync();
+            Employees = new ObservableCollection<Employee?>(emps);
+            var cps = await CpFacade.GetAllAsync();
             Cps = new ObservableCollection<Cp>(cps);
-            var cities = await _cityFacade.GetAllAsync();
+            var cities = await CityFacade.GetAllAsync();
             Cities = new ObservableCollection<City>(cities);
-            var vehicles = await _vehicleFacade.GetAllAsync();
+            var vehicles = await VehicleFacade.GetAllAsync();
             Vehicles = new ObservableCollection<Vehicle>(vehicles);
         }
         private async Task LoadDataCpQuery()
@@ -139,12 +139,12 @@ namespace application.App.Pages.ViewModel
             Cps.Clear();
             if (SearchbarCp == string.Empty)
             {
-                var result = await _cpFacade.GetByFilterAsync(SelectedEmployees, SelectedCities, SelectedVehicles, new List<Cp>());
+                var result = await CpFacade.GetByFilterAsync(SelectedEmployees, SelectedCities, SelectedVehicles, new List<Cp>());
                 Cps = new ObservableCollection<Cp>(result);
             }
             else
             {
-                var result = await _cpFacade.GetByNameAsync(SearchbarCp);
+                var result = await CpFacade.GetByNameAsync(SearchbarCp);
                 Cps = new ObservableCollection<Cp>(result);
             }
         }
@@ -156,13 +156,13 @@ namespace application.App.Pages.ViewModel
             string lowerSearchTerm = SearchbarEmployee.Trim().ToLower();
             if (SearchbarEmployee != string.Empty)
             {
-                var result = await _employeeFacade.GetByNameAsync(SearchbarEmployee);
-                Employees = new ObservableCollection<Employee>(result);
+                var result = await EmployeeFacade.GetByNameAsync(SearchbarEmployee);
+                Employees = new ObservableCollection<Employee?>(result);
             }
             else
             {
-                var result = await _employeeFacade.GetAllAsync();
-                Employees = new ObservableCollection<Employee>(result);
+                var result = await EmployeeFacade.GetAllAsync();
+                Employees = new ObservableCollection<Employee?>(result);
             }
         }
         async partial void OnSearchbarCityChanged(string? value)
@@ -171,12 +171,12 @@ namespace application.App.Pages.ViewModel
 
             if (SearchbarCity != string.Empty)
             {
-                var result = await _cityFacade.GetByNameAsync(SearchbarCity.Trim());
+                var result = await CityFacade.GetByNameAsync(SearchbarCity.Trim());
                 Cities = new ObservableCollection<City>(result);
             }
             else
             {
-                var result = await _cityFacade.GetAllAsync();
+                var result = await CityFacade.GetAllAsync();
                 Cities = new ObservableCollection<City>(result);
             }
         }
@@ -188,12 +188,12 @@ namespace application.App.Pages.ViewModel
 
             if (SearchbarEmployee != string.Empty)
             {
-                var result = await _vehicleFacade.GetAllAsync();
+                var result = await VehicleFacade.GetAllAsync();
                 Vehicles = new ObservableCollection<Vehicle>(result);
             }
             else
             {
-                var result = await _vehicleFacade.GetAllAsync();
+                var result = await VehicleFacade.GetAllAsync();
                 Vehicles = new ObservableCollection<Vehicle>(result);
             }
         }
@@ -205,21 +205,28 @@ namespace application.App.Pages.ViewModel
         //MainPageView aux methods
         public async Task<bool> SaveEmployeeAsync(Employee model)
         {
-            var result = await _employeeFacade.SaveAsync(model);
+            var result = await EmployeeFacade.SaveAsync(model);
             if (result.Id == String.Empty)
                 return false;
             return true;
         }
         public async Task<bool> SaveCityAsync(City model)
         {
-            var result = await _cityFacade.SaveAsync(model);
+            var result = await CityFacade.SaveAsync(model);
             if (result == null)
                 return false;
             return true;
         }
         public async Task<bool> SaveVehicleAsync(Vehicle model)
         {
-            var result = await _vehicleFacade.SaveAsync(model);
+            var result = await VehicleFacade.SaveAsync(model);
+            if (result == null)
+                return false;
+            return true;
+        }
+        public async Task<bool> SaveCpAsync(Cp model)
+        {
+            var result = await CpFacade.SaveAsync(model);
             if (result == null)
                 return false;
             return true;
@@ -227,22 +234,26 @@ namespace application.App.Pages.ViewModel
 
         public async Task RoveEmployeeAsync(Employee model)
         {
-            await _employeeFacade.DeleteAsync(model.Id);
+            await EmployeeFacade.DeleteAsync(model.Id);
         }
         public async Task RoveCityAsync(City model)
         {
-            await _cityFacade.DeleteAsync(model.Id);
+            await CityFacade.DeleteAsync(model.Id);
         }
         public async Task RoveVehicleAsync(Vehicle model)
         {
-            await _vehicleFacade.DeleteAsync(model.Id);
+            await VehicleFacade.DeleteAsync(model.Id);
+        }
+        public async Task RemoveCpAsync(Cp model)
+        {
+            await CpFacade.DeleteAsync(model.Id);
         }
 
         public async Task GetByFilterAsync()
         {
             var selectedCp = new List<Cp>();
             selectedCp.Add(IsClickedCpToExpand);
-            var result = await _vehicleFacade.GetByFilterAsync(new List<Employee>(), new List<City>(), new List<Vehicle>(), selectedCp);
+            var result = await VehicleFacade.GetByFilterAsync(new List<Employee?>(), new List<City>(), new List<Vehicle>(), selectedCp);
             foreach (var cp in Cps)
             {
                 if (cp == IsClickedCpToExpand)

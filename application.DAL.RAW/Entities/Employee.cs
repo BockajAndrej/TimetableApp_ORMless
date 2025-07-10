@@ -21,6 +21,7 @@ public partial class Employee : ObservableObject, IEntity<string>
 
     //Specific properties
     public string FullName => $"{FirstName} {LastName}";
+    public string FullNameWithId => $"{Id} {FirstName} {LastName}";
     public DateTime BirthDayDateTime
     {
         get { return BirthDay.ToDateTime(TimeOnly.MinValue); }

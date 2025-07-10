@@ -4,38 +4,68 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                xmlns:system="clr-namespace:System;assembly=System.Runtime"
-               xmlns:details="clr-namespace:application.DAL.RAW.Entities;assembly=application.DAL.RAW"
+               xmlns:entities="using:application.DAL.RAW.Entities"
                x:Class="application.App.Pages.View.Popups.CpEditPopup"
                CanBeDismissedByTappingOutsideOfPopup="False"
+               Padding="-10"
+               BackgroundColor="{StaticResource Gray900}"
 >
 
     <toolkit:Popup.Content>
         <Grid RowDefinitions="Auto, *, Auto"
               Padding="0"
               BackgroundColor="{StaticResource Gray900}"
-              WidthRequest="500"
-              HeightRequest="300">
+              WidthRequest="550"
+              HeightRequest="400">
 
-            <Grid ColumnDefinitions="auto, *" RowDefinitions="auto, *" ColumnSpacing="20">
-                <Button Grid.Column="1" Text="✕" FontSize="Large" TextColor="Gray"
+            <Grid ColumnDefinitions="*, auto" RowDefinitions="auto, auto, *" ColumnSpacing="20">
+                <Button Text="✕" FontSize="Large" TextColor="Gray"
                         BackgroundColor="Transparent" BorderWidth="0"
-                        HorizontalOptions="End" VerticalOptions="Start" Margin="0, -15, -5, 0"/>
-                <Image Source="city_ilustration.jpg"
-                       Aspect="AspectFit"
-                       WidthRequest="100"
-                       HeightRequest="100"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Start"/>
+                        HorizontalOptions="End" VerticalOptions="Start" Margin="0, -15, -30, 0" Clicked="OnCloseTapped" />
 
-                <StackLayout Grid.Column="1" Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" Spacing="20">
-                        <Label Text="Start" VerticalOptions="Center"></Label>
-                        <StackLayout Orientation="Vertical">
-                            <DatePicker ></DatePicker>
-                            <TimePicker VerticalOptions="Center"></TimePicker>
-                        </StackLayout>
-                    </StackLayout>
-                </StackLayout>
+                <Grid Grid.Column="0" ColumnDefinitions="*, *" ColumnSpacing="30">
+                    <Grid RowDefinitions="auto, auto">
+                        <DatePicker Date="{Binding StartDate}" ></DatePicker>
+                        <TimePicker Time="{Binding StartTime}" Grid.Row="1" VerticalOptions="Center"></TimePicker>
+                    </Grid>
+                    <Grid RowDefinitions="auto, auto" Grid.Column="1">
+                        <DatePicker Date="{Binding EndDate}" ></DatePicker>
+                        <TimePicker Time="{Binding EndTime}" Grid.Row="1" VerticalOptions="Center"></TimePicker>
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" ColumnDefinitions="*, *" ColumnSpacing="30">
+                    <Grid RowDefinitions="auto, auto, auto, auto"  RowSpacing="5">
+                        <Picker x:Name="StartCityPicker" Title="Select a start city" ItemsSource="{Binding CityOptions, Mode=TwoWay}" ItemDisplayBinding="{Binding CityName}"  SelectedItem="{Binding SelectedStartCity }"/>
+                        <Picker Grid.Row="1" x:Name="EndCityPicker" Title="Select a end city" ItemsSource="{Binding CityOptions, Mode=TwoWay}" ItemDisplayBinding="{Binding CityName}"  SelectedItem="{Binding SelectedEndCity }"/>
+                        <Picker Grid.Row="2" x:Name="StatePicker" Title="Select a state" ItemsSource="{Binding CpStateOptions, Mode=TwoWay }" SelectedItem="{Binding CpStateSelected }"/>
+                        <Picker Grid.Row="3" x:Name="EmployeePicker" Title="Select a employees" ItemsSource="{Binding EmployeeOptions, Mode=TwoWay}" ItemDisplayBinding="{Binding FullNameWithId}"  SelectedItem="{Binding SelectedEmployee }"/>
+                    </Grid>
+
+
+                        <VerticalStackLayout Grid.Column="1" Padding="10">
+                            <Grid ColumnDefinitions="*, auto">
+                                <SearchBar Grid.Column="0" Placeholder="Search employees..." HorizontalTextAlignment="Start" Text="{Binding SearchbarEmployee, Mode=TwoWay}"/>
+                            </Grid>
+
+                            <CollectionView ItemsSource="{Binding VehicleOptions}" 
+                                            MaximumHeightRequest="200" 
+                                            SelectionMode="None"
+                                            x:Name="VehiclePopupCollectionView">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border StrokeShape="RoundRectangle 5" Padding="0" Margin="50, 0, 0,5">
+                                            <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="auto, *, Auto" ColumnSpacing="10" Padding="5, 0, 5, 0">
+                                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding Id}" VerticalOptions="Center"/>
+                                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding VehicleName}" VerticalOptions="Center" HorizontalOptions="Center" />
+                                                <CheckBox IsChecked="{Binding ISelectedFromFilter}" Grid.Row="1" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="End"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                </Grid>
             </Grid>
 
 
@@ -44,7 +74,6 @@
                         Text="Odstranit"
                         HorizontalOptions="Center"
                         IsEnabled="{Binding IdIsUsedInverseValue}" 
-                        x:DataType="details:Cp" 
                         Clicked="OnDeleteTapped"/>
 
                 <Button Grid.Column="2"
